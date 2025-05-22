@@ -29,10 +29,6 @@ switch ($action) {
         $controller->checkLoginSimple($data);
         break;
 
-    case 'checkLoginExtended':
-        $controller->checkLoginExtended($data);
-        break;
-
     default:
     throw new \GIG\Domain\Exceptions\GeneralException('Неизвестное действие', 400, [
         'reason' => 'invalid_action',

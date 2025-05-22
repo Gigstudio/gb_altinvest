@@ -1,5 +1,6 @@
 gb_altinvest
 ├── .env
+├── .env.example
 ├── .gitignore
 ├── bin
 │   ├── mysql8
@@ -37,55 +38,129 @@ gb_altinvest
 ├── history.md
 ├── html
 │   ├── .htaccess
+│   ├── API
+│   │   ├── Controller
+│   │   │   ├── AuthController.php
+│   │   │   └── ConsoleController.php
+│   │   ├── handlers
+│   │   │   ├── auth.php
+│   │   │   └── console.php
+│   │   └── index.php
+│   ├── app
+│   │   ├── Core
+│   │   │   ├── Application.php
+│   │   │   ├── AssetManager.php
+│   │   │   ├── Autoloader.php
+│   │   │   ├── Block.php
+│   │   │   ├── Config.php
+│   │   │   ├── Console.php
+│   │   │   ├── Controller.php
+│   │   │   ├── ErrorHandler.php
+│   │   │   ├── Event.php
+│   │   │   ├── functions.php
+│   │   │   ├── PasswordValidator.php
+│   │   │   ├── Renderer.php
+│   │   │   ├── Request.php
+│   │   │   ├── Response.php
+│   │   │   ├── Router.php
+│   │   │   └── SchemaManager.php
+│   │   ├── Domain
+│   │   │   ├── Entities
+│   │   │   │   └── User.php
+│   │   │   ├── Exceptions
+│   │   │   │   └── GeneralException.php
+│   │   │   └── Services
+│   │   │       ├── AuthManager.php
+│   │   │       └── LoginGenerator.php
+│   │   ├── Infrastructure
+│   │   │   ├── Clients
+│   │   │   ├── Contracts
+│   │   │   │   ├── DatabaseClientInterface.php
+│   │   │   │   └── ServiceClientInterface.php
+│   │   │   ├── Persistence
+│   │   │   │   ├── Database.php
+│   │   │   │   └── MySQLClient.php
+│   │   │   └── Repository
+│   │   │       └── MySQLUserRepository.php
+│   │   └── Presentation
+│   │       ├── Controller
+│   │       │   ├── HomeController.php
+│   │       │   └── MessageController.php
+│   │       └── View
+│   │           ├── content.php
+│   │           ├── error.php
+│   │           ├── FontManager.php
+│   │           ├── layouts
+│   │           │   └── default.php
+│   │           ├── login.php
+│   │           ├── MenuBuilder.php
+│   │           ├── partials
+│   │           │   ├── bottommenu.php
+│   │           │   ├── console.php
+│   │           │   ├── head.php
+│   │           │   └── mainmenu.php
+│   │           ├── testTradernetApi
+│   │           │   └── content.php
+│   │           └── ViewHelper.php
+│   ├── bootstrap.php
+│   ├── config
+│   │   ├── dbschema
+│   │   │   └── users.json
+│   │   ├── defines.php
+│   │   ├── init.json
+│   │   ├── init.json.example
+│   │   ├── menuItems.php
+│   │   └── routes.php
+│   ├── Nt
+│   │   └── PublicApiClient.php
 │   ├── robots.txt
-│   └── siteroot
-│       ├── .htaccess
-│       ├── assets
-│       │   ├── css
-│       │   │   ├── all.css
-│       │   │   ├── default.css
-│       │   │   ├── login.css
-│       │   │   ├── test_default.css
-│       │   │   ├── themes.css
-│       │   │   └── t_editor.css
-│       │   ├── images
-│       │   │   ├── gigicon.png
-│       │   │   ├── gigicon_white.png
-│       │   │   ├── gig_logo_text_black.png
-│       │   │   ├── gig_logo_text_white.png
-│       │   │   ├── Logotip-PMKHZ_2023_prozrachnyy-fon.png
-│       │   │   ├── Magnifying_glass_icon.svg
-│       │   │   ├── pnhz_logo_round_01.png
-│       │   │   └── pnhz_logo_round_02.png
-│       │   ├── js
-│       │   │   ├── core
-│       │   │   │   ├── APIClient.js
-│       │   │   │   ├── Auth copy.js
-│       │   │   │   ├── Auth.js
-│       │   │   │   ├── AuthOld.js
-│       │   │   │   ├── Console.js
-│       │   │   │   └── Utils.js
-│       │   │   ├── main.js
-│       │   │   └── percoClient.js
-│       │   └── webfonts
-│       │       ├── fa-brands-400.eot
-│       │       ├── fa-brands-400.svg
-│       │       ├── fa-brands-400.ttf
-│       │       ├── fa-brands-400.woff
-│       │       ├── fa-brands-400.woff2
-│       │       ├── fa-regular-400.eot
-│       │       ├── fa-regular-400.svg
-│       │       ├── fa-regular-400.ttf
-│       │       ├── fa-regular-400.woff
-│       │       ├── fa-regular-400.woff2
-│       │       ├── fa-solid-900.eot
-│       │       ├── fa-solid-900.svg
-│       │       ├── fa-solid-900.ttf
-│       │       ├── fa-solid-900.woff
-│       │       ├── fa-solid-900.woff2
-│       │       ├── Lobster-Regular.ttf
-│       │       └── OFL.txt
-│       └── index.php
+│   ├── siteroot
+│   │   ├── .htaccess
+│   │   ├── assets
+│   │   │   ├── css
+│   │   │   │   ├── all.css
+│   │   │   │   ├── default.css
+│   │   │   │   ├── login.css
+│   │   │   │   ├── test_default.css
+│   │   │   │   ├── themes.css
+│   │   │   │   └── t_editor.css
+│   │   │   ├── images
+│   │   │   │   ├── gigicon.png
+│   │   │   │   ├── gigicon_white.png
+│   │   │   │   ├── gig_logo_text_black.png
+│   │   │   │   ├── gig_logo_text_white.png
+│   │   │   │   ├── Logotip-PMKHZ_2023_prozrachnyy-fon.png
+│   │   │   │   ├── Magnifying_glass_icon.svg
+│   │   │   │   ├── pnhz_logo_round_01.png
+│   │   │   │   └── pnhz_logo_round_02.png
+│   │   │   ├── js
+│   │   │   │   ├── core
+│   │   │   │   │   ├── APIClient.js
+│   │   │   │   │   ├── Console.js
+│   │   │   │   │   └── Utils.js
+│   │   │   │   └── main.js
+│   │   │   └── webfonts
+│   │   │       ├── fa-brands-400.eot
+│   │   │       ├── fa-brands-400.svg
+│   │   │       ├── fa-brands-400.ttf
+│   │   │       ├── fa-brands-400.woff
+│   │   │       ├── fa-brands-400.woff2
+│   │   │       ├── fa-regular-400.eot
+│   │   │       ├── fa-regular-400.svg
+│   │   │       ├── fa-regular-400.ttf
+│   │   │       ├── fa-regular-400.woff
+│   │   │       ├── fa-regular-400.woff2
+│   │   │       ├── fa-solid-900.eot
+│   │   │       ├── fa-solid-900.svg
+│   │   │       ├── fa-solid-900.ttf
+│   │   │       ├── fa-solid-900.woff
+│   │   │       ├── fa-solid-900.woff2
+│   │   │       ├── Lobster-Regular.ttf
+│   │   │       └── OFL.txt
+│   │   └── index.php
+│   └── storage
+│       └── logs
+│           └── events.log
 ├── LICENSE
 ├── logs
 │   ├── .gitkeep

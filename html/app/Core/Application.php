@@ -5,8 +5,7 @@ defined('_RUNKEY') or die;
 
 use GIG\Core\Config;
 use GIG\Infrastructure\Persistence\MySQLClient;
-use GIG\Infrastructure\Clients\LDAPClient;
-use GIG\Infrastructure\Clients\PercoWebClient;
+use GIG\Domain\Services\TradernetService;
 use GIG\Core\Request;
 use GIG\Core\Response;
 use GIG\Core\Router;
@@ -16,10 +15,8 @@ class Application
 {
     private Config $config;
     public static Application $app;
-
+    private ?TradernetService $tradernetService = null;
     private ?MySQLClient $db = null;
-    public ?LDAPClient $ldapClient = null;
-    public ?PercoWebClient $percoWebClient = null;
     private ?User $currentUser = null;
 
     public Request $request;
@@ -54,38 +51,24 @@ class Application
         return $this->config::get($key, $default);
     }
 
+    public function getTradernetService(): ?TradernetService
+    {
+        if (!$this->tradernetService) {
+            $config = $this->config->get('tradernet');
+            $apiKey = $config['public_key'] ?? '';
+            $apiSecret = $config['secret_key'] ?? '';
+            $version = \Nt\PublicApiClient::V2;
+            $this->tradernetService = new TradernetService($apiKey, $apiSecret, $version);
+        }
+        return $this->tradernetService;
+    }
+    
     public function getDatabase(): ?MySQLClient
     {
         if (!$this->db) {
             $this->db = new MySQLClient();
         }
         return $this->db;
-    }
-
-    public function getLdap(): ?LDAPClient
-    {
-        if (!$this->ldapClient) {
-            try {
-                $this->ldapClient = new LDAPClient($this->config->get('ldap'));
-            } catch (\Throwable $e) {
-                $this->ldapClient = null;
-                trigger_error("LDAP недоступен: " . $e->getMessage(), E_USER_WARNING);
-            }
-        }
-        return $this->ldapClient;
-    }
-
-    public function getPercoWebClient(): ?PercoWebClient
-    {
-        if (!$this->percoWebClient) {
-            try {
-                $this->percoWebClient = new PercoWebClient($this->config->get('perco'));
-            } catch (\Throwable $e) {
-                $this->percoWebClient = null;
-                trigger_error("PERCo-Web недоступен: " . $e->getMessage(), E_USER_WARNING);
-            }
-        }
-        return $this->percoWebClient;
     }
 
     public function getCurrentUser(): ?User

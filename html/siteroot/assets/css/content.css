@@ -1,0 +1,107 @@
+.content-block {
+    background: var(--bg-color, #fff);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px 0 var(--shadow-color, rgba(0,0,0,0.08));
+    padding: 24px 32px 32px 32px;
+    /* max-width: 900px; */
+    margin: 32px auto 0 auto;
+    color: var(--text-color, #222);
+}
+
+.content-block h1 {
+    font-size: 2em;
+    margin-bottom: 18px;
+    color: var(--text-darkgray, #2b2b2b);
+    text-align: left;
+}
+
+.ticker-form {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.ticker-form label {
+    font-weight: 500;
+    color: var(--text-darkgray, #222);
+}
+
+.ticker-form select,
+.ticker-form button {
+    padding: 6px 12px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: 1px solid var(--text-gray, #bbb);
+    background: var(--bg-color, #fff);
+    color: var(--text-color, #000);
+    transition: background var(--transition-mid, .3s), color var(--transition-mid, .3s);
+}
+
+.ticker-form button {
+    background: var(--primary-bg, #3167d2);
+    color: var(--menu-foreaccent, #fff);
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition-fast, .1s);
+}
+.ticker-form button:hover {
+    background: var(--menu-bg, #234a95);
+}
+
+.alert {
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    background: var(--msg-info, #e7f3ff);
+    color: var(--text-blue, #004085);
+}
+.alert.error {
+    background: var(--msg-error, #ffe0e0);
+    color: var(--light-red, #b30000);
+    border-color: var(--msg-error, #ffc4c4);
+}
+.alert.info {
+    background: var(--msg-info, #e7f3ff);
+    color: var(--text-blue, #004085);
+    border-color: var(--msg-info, #b3daff);
+}
+
+.quotes-table-wrapper {
+    overflow-x: auto;
+    max-height: 440px;
+}
+
+.quotes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: var(--bg-color, #fff);
+    color: var(--text-color, #000);
+}
+
+.quotes-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--primary-bg, #3167d2);
+    font-weight: 700;
+    color: var(--menu-foreaccent, #fff);
+}
+
+.quotes-table td {
+    color: var(--text-color, #fff);
+    font-size: 12px;
+}
+
+.quotes-table th, .quotes-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--text-gray, #ddd);
+    text-align: right;
+}
+
+.quotes-table tr:last-child td {
+    border-bottom: none;
+}

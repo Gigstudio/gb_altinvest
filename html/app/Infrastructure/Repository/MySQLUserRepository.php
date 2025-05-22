@@ -190,73 +190,7 @@ class MySQLUserRepository
             );
             if (!$fio) {
                 new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: пустой ФИО!" . json_encode($user));
-                return $user;
             }
-
-            $percoRepo = new PercoUserRepository();
-            $matches = $percoRepo->findByFio($fio);
-            $percoMatch = null;
-            file_put_contents(PATH_LOGS.'debug_create_user.log', date('c')." Matches for({$fio})".json_encode($matches)."\n", FILE_APPEND);
-
-            foreach ($matches as $candidate) {
-                if (
-                    empty($divisionName) ||
-                    mb_strtoupper(trim($candidate->division_name)) === mb_strtoupper(trim($divisionName))
-                ) {
-                    new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Совпадение обнаружено." . json_encode($candidate));
-                    $percoMatch = $candidate;
-                    break;
-                } else {
-                    new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Совпадение НЕ обнаружено.");
-                }
-            }
-
-            if ($percoMatch && $percoMatch->id) {
-                new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Отправление запроса в Perco.");
-                $percoClient = Application::getInstance()->getPercoWebClient();
-                $detailed = $percoClient->getUserInfoById((int)$percoMatch->id);
-                new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Подробные данные из Perco." . json_encode($detailed));
-
-                // ----------- BAGENUMBER -----------
-                if (empty($user->bage_number) && !empty($percoMatch->identifier)) {
-                    new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Номер пропуска - $percoMatch->identifier.");
-                    $user->bage_number = $percoMatch->identifier;
-                }
-
-                // ----------- DIVISION -----------
-                if (isset($detailed['division']) && is_array($detailed['division'])) {
-                    $div = reset($detailed['division']); // значение
-                    $divRaw = key($detailed['division']); // ключ — возможно, id
-                    [$divId, $divName] = $this->extractIdAndName($divRaw . ' ' . $div);
-                    $user->division_id = $this->resolveDictionaryEntry('divisions', $divRaw . ' ' . $div);
-                    new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Код подразделения - $user->division_id.");
-                }
-
-                // ----------- POSITION -----------
-                if (isset($detailed['position']) && is_array($detailed['position'])) {
-                    $pos = reset($detailed['position']);
-                    $posRaw = key($detailed['position']);
-                    [$posId, $posName] = $this->extractIdAndName($posRaw . ' ' . $pos);
-                    $user->position_id = $this->resolveDictionaryEntry('positions', $posRaw . ' ' . $pos);
-                    new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Код должности - $user->position_id.");
-                }
-
-                // ----------- BIRTHDAY и ID_FROM_1C -----------
-                if (empty($user->birthday) && !empty($detailed['additional_fields']['text'])) {
-                    file_put_contents(PATH_LOGS.'debug_perco.txt', print_r($detailed, true));
-                    foreach ($detailed['additional_fields']['text'] as $field) {
-                        if (mb_strtoupper($field['name']) === 'ИИН' && !empty($field['text'])) {
-                            $user->birthday = $this->getBirthdateFromIin($field['text']);
-                            new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: ИИН - " . $field['text']);
-                        }
-                        if (empty($user->id_from_1c) && mb_strtoupper($field['name']) === 'UID_1C' && !empty($field['text'])) {
-                            $user->id_from_1c = $field['text'];
-                            new Event(Event::EVENT_WARNING, self::class, "enrichUserWithPerco: Идентификатор из 1С - " . $field['text']);
-                        }
-                    }
-                }
-            }
-
             return $user;
         } catch (\Throwable $e){
             new Event(Event::EVENT_ERROR, self::class, "Ошибка в enrichUserWithPerco: " . $e->getMessage());

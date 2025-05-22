@@ -4,77 +4,79 @@ namespace GIG\Presentation\Controller;
 defined('_RUNKEY') or die;
 
 use GIG\Core\Controller;
-use GIG\Core\Block;
+use GIG\Core\AssetManager;
+use GIG\Core\Event;
+use GIG\Domain\Exceptions\GeneralException;
 use Nt\PublicApiClient;
-
-require_once PATH_ROOT . 'Nt/PublicApiClient.php';
 
 class HomeController extends Controller
 {
     public function index(array $data): void
     {
-        $ldap = $this->app->getLdap();
-        $perco = $this->app->getPercoWebClient();
-
-        if ($ldap) {
-            // console_log('LDAP клиент создан');
-            $connection = $ldap->getConnection();
-            if ($connection) {
-                // console_log('LDAP соединение активно');
-                $userInfo = $ldap->getUserData('g.chirikov');
-                // $userInfo = $ldap->getUserData('a.abdilmanov');
-                // console_log($userInfo, 'Результат getUserData()');
-                $data['userinfo'] = $userInfo;
-            } else {
-                // console_log('Нет соединения с LDAP');
-                $data['userinfo'] = null;
-            }
-        } else {
-            // console_log('LDAP клиент недоступен');
-            $data['userinfo'] = null;
-        }
-        
-        // $data['userinfo'] = $ldap ? $ldap->getUserData('ai.kadyrbekov') : null;
-        $data['percouser'] = $perco ? $perco->getUserInfoById(5600830) : null;
-        // $data['percouser'] = $perco ? $perco->getUserInfoById(51665) : null;
-        // $data['percousers'] = $perco ? $perco->fetchAllUsersFromList() : null;
-
-        $head = Block::make('partials/head');
-        $mainmenu = Block::make('partials/mainmenu', ['user' => 'Admin']);
-        $content = Block::make('content', $data);
-        $bottommenu = Block::make('partials/bottommenu', ['user' => 'Admin']);
-
-        $page = Block::make('layouts/default', ['title' => 'CRM-панель'])
-            ->with([
-                'head' => $head,
-                'mainmenu' => $mainmenu,
-                'content' => $content,
-                'bottommenu' => $bottommenu,
-            ]);
-
-        $this->render($page);
+        $pageBlock = $this->buildPage($data);
+        $this->render($pageBlock);
     }
 
-    public function testTradernetApi()
+    public function testTradernetApi($data)
     {
-        $config = $this->app->getConfig('tradernet');
-        // var_dump($config);
-        $apiKey = $config['public_key'];
-        $apiSecretKey = $config['secret_key'];
-        $version = PublicApiClient::V2;
+        AssetManager::addStyle("/assets/css/content.css");
+        $data['title'] = 'Котировки';
+        $data['symbols'] = $this->app->getConfig('tickers', []);
 
-        $client = new PublicApiClient($apiKey, $apiSecretKey, $version);
+        $contentPath = __FUNCTION__ . '/content';
+        
+        $symbol = $data['query']['symbol'] ?? array_key_first($data['symbols']);
+        if (!isset($data['symbols'][$symbol])) {
+            new Event(Event::EVENT_WARNING, self::class, "Попытка выбрать несуществующий тикер '$symbol', установлен тикер по умолчанию.");
+            $data['error'] = "Некорректный тикер ($symbol)! Использован тикер по умолчанию.";
+            $symbol = array_key_first($data['symbols']);
+        }
 
-        $command = 'getHloc'; 
-        $params = [
-            "id"           => "KASE",
-            "count"        => -1,
-            "timeframe"    => 1440,
-            "date_from"    => "15.08.2020 00:00",
-            "date_to"      => "16.08.2020 00:00",
-            "intervalMode" => "ClosedRay"
-        ];
-        $result = $client->sendRequest($command, $params, 'array');
-        print_r($result); // Либо логируй в файл, либо выводи на страницу
+        $dateFrom = $data['query']['date_from'] ?? '15.08.2022 00:00';
+        $dateTo   = $data['query']['date_to'] ?? '16.05.2025 00:00';
+
+        $quotes = [];
+        try {
+            $tradernetService = $this->app->getTradernetService();
+            $result = $tradernetService->getQuotes($symbol, $dateFrom, $dateTo);
+
+            // Преобразование данных Tradernet к плоскому массиву
+            $hloc   = $result['hloc'][$symbol] ?? [];
+            $vols   = $result['vl'][$symbol] ?? [];
+            $dates  = $result['xSeries'][$symbol] ?? [];
+
+            for ($i = 0; $i < count($hloc); $i++) {
+                $quotes[] = [
+                    'date'   => isset($dates[$i]) ? date('d.m.Y', $dates[$i]) : '-',
+                    'open'   => $hloc[$i][2] ?? '-',
+                    'high'   => $hloc[$i][0] ?? '-',
+                    'low'    => $hloc[$i][1] ?? '-',
+                    'close'  => $hloc[$i][3] ?? '-',
+                    'volume' => $vols[$i] ?? '-',
+                ];
+            }
+
+            // Опционально: название тикера из info
+            if (!empty($result['info'][$symbol]['short_name'])) {
+                $data['title'] .= ' — ' . htmlspecialchars($result['info'][$symbol]['short_name']);
+            }
+
+        } catch (\Throwable $e) {
+            new Event(Event::EVENT_ERROR, self::class, "Ошибка получения котировок для '$symbol': " . $e->getMessage());
+            $data['error'] = "Данные по тикеру '$symbol' временно недоступны.";
+            $quotes = [];
+        }
+
+        $data['symbol'] = $symbol;
+        $data['quotes'] = $quotes;
+
+        if($tradernetService){
+            // $csvFile = $tradernetService::saveAsCsv($quotes, $symbol);
+            $jsonFile = $tradernetService::saveAsJson($quotes, $symbol);
+        }
+        new Event(Event::EVENT_INFO, self::class, "Котировки по $symbol сохранены в $jsonFile для анализа.");
+
+        $pageBlock = $this->buildPage($data, $contentPath, 'CRM-панель');
+        $this->render($pageBlock);
     }
 }

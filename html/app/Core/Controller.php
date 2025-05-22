@@ -48,4 +48,23 @@ abstract class Controller
         }
         $this->response->html($this->renderer->render($block), $this->statusCode ?? 200);
     }
+
+    protected function buildPage(array $data, string $contentPath = '/content', string $title = 'CRM-панель'): Block
+    {
+        $head = Block::make('partials/head');
+        $mainmenu = Block::make('partials/mainmenu', ['user' => 'Admin']);
+        $content = Block::make(
+            (file_exists(PATH_VIEWS . $contentPath . '.php') ? $contentPath : '/content'),
+            $data
+        );
+        $bottommenu = Block::make('partials/bottommenu', ['user' => 'Admin']);
+
+        return Block::make('layouts/default', ['title' => $title])
+            ->with([
+                'head' => $head,
+                'mainmenu' => $mainmenu,
+                'content' => $content,
+                'bottommenu' => $bottommenu,
+            ]);
+    }
 }

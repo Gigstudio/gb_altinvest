@@ -2,8 +2,9 @@
 return [
     'main' => [
         ['title' => 'Главная', 'link' => '/', 'icon' => ''],
-        ['title' => 'Тестирование API', 'link' => '/api_test', 'icon' => ''],
-        ['title' => 'Отчеты', 'link' => '/reports', 'icon' => ''],
+        ['title' => 'Котировки', 'link' => '/api_test', 'icon' => ''],
+        ['title' => 'Вакансии', 'link' => '/vacancies', 'icon' => ''],
+        ['title' => 'Аналитика', 'link' => '/reports', 'icon' => ''],
     ],
     'side' => [],
     'bottom' => [

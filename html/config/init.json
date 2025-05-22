@@ -57,5 +57,10 @@
     "login_attempts": 3, 
     "encript_password": true,
     "password_algo": "PASSWORD_BCRYPT"
+  },
+  "tickers": {
+    "KCEL.KZ": "Kcell",
+    "HSBK.KZ": "Halyk Bank",
+    "KZAP.KZ": "Kazatomprom"
   }
 }

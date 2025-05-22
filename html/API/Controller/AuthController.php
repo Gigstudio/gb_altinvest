@@ -6,7 +6,6 @@ defined('_RUNKEY') or die;
 use GIG\Core\Controller;
 use GIG\Domain\Services\AuthManager;
 use GIG\Infrastructure\Repository\MySQLUserRepository;
-use GIG\Core\Application;
 use GIG\Domain\Services\LoginGenerator;
 use GIG\Domain\Exceptions\GeneralException;
 
@@ -76,72 +75,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function checkLoginExtended(array $data): void
-    {
-        $bage = $data['bage'] ?? null;
-        $login = $data['login'] ?? null;
-
-        if (!$bage) {
-            throw new GeneralException(
-                'Номер пропуска не передан.',
-                400,
-                [
-                    'reason' => 'missing_bage',
-                    'detail' => 'Параметр bage отсутствует при расширенной проверке логина. Контроллер: ' . self::class
-                ]
-            );
-        }
-
-        if (!$login) {
-            throw new GeneralException(
-                'Логин не передан.',
-                400,
-                [
-                    'reason' => 'missing_login',
-                    'detail' => 'Параметр login отсутствует при расширенной проверке логина. Контроллер: ' . self::class
-                ]
-            );
-        }
-
-        $repo = new MySQLUserRepository();
-        $localByBage = $repo->search('bage_number', $bage);
-
-        $local = $repo->findByLogin($login);
-
-        $ldap = null;
-        try {
-            $ldapClient = Application::getInstance()->getLdap();
-            if ($ldapClient) {
-                $ldap = $ldapClient->getUserData($login);
-            }
-        } catch (\Throwable $e) {
-            // логгировать при необходимости
-        }
-
-        $existsBage = (bool) $localByBage;
-        $existsLocal = (bool)$local;
-        $existsLdap = !empty($ldap);
-
-        $status = match (true) {
-            $existsBage => 'bage_exists',
-            $existsLocal && $existsLdap => 'exists_both',
-            $existsLocal => 'exists_local',
-            $existsLdap => 'exists_ldap',
-            default => 'available'
-        };
-
-        $this->json([
-            'status' => $status,
-            'message' => match ($status) {
-                'bage_exists' => 'Этот номер пропуска уже зарегистрирован в системе. Обратитесь в службу поддержки пользователей.',
-                'exists_both' => 'Такой логин уже используется и в системе, и в AD. Войдите под своей учетной записью или укажите другой логин.',
-                'exists_local' => 'Такой логин уже зарегистрирован. Укажите другой или войдите, если это вы.',
-                'exists_ldap' => 'Такой логин найден в AD. Войдите под своей учетной записью или укажите другой логин.',
-                'available' => 'Логин свободен'
-            }
-        ]);
-    }
-
     public function register(array $data): void
     {
         $stage = $data['stage'] ?? 'init';
@@ -160,18 +93,9 @@ class AuthController extends Controller
             $login = LoginGenerator::fromFullName($fio);
             $existsLocal = (bool) $repo->findByLogin($login);
 
-            $existsLdap = false;
-            try {
-                $ldapClient = Application::getInstance()->getLdap();
-                if ($ldapClient) {
-                    $existsLdap = !empty($ldapClient->getUserData($login));
-                }
-            } catch (\Throwable) {}
-
-            if ($existsLocal || $existsLdap) {
+            if ($existsLocal) {
                 $sources = [];
                 if ($existsLocal) $sources[] = 'локальной БД';
-                if ($existsLdap) $sources[] = 'LDAP';
                 $sourceText = implode(' и ', $sources);
 
                 throw new GeneralException('Такой логин уже используется.', 409, [
@@ -192,10 +116,9 @@ class AuthController extends Controller
         $password = $data['password'] ?? '';
         $confirm = $data['confirm'] ?? '';
         $email = trim($data['email'] ?? '');
-        $bage = trim($data['bage'] ?? '');
         $foundUser = $data['foundUser'] ?? [];
 
-        if (!$login || !$password || !$confirm || !$email || !$bage) {
+        if (!$login || !$password || !$confirm || !$email) {
             throw new GeneralException('Не все поля заполнены.', 400, [
                 'detail' => 'Пропущены поля регистрации: ' . json_encode($data)
             ]);
@@ -220,9 +143,6 @@ class AuthController extends Controller
             'first_name'  => $foundUser['first_name'] ?? null,
             'last_name'   => $foundUser['last_name'] ?? null,
             'middle_name' => $foundUser['middle_name'] ?? null,
-            'bage_number' => (int)$bage,
-            'division_id' => $foundUser['division_id'] ?? null,
-            'position_id' => $foundUser['position_id'] ?? null
         ], $password);
 
         $this->json([

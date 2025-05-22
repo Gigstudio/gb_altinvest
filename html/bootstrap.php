@@ -83,4 +83,4 @@ $loader->addNamespace(APPLICATION . '\\Infrastructure\\Clients', PATH_CLIENTS);
 $loader->addNamespace(APPLICATION . '\\Presentation', PATH_PRESENTATION);
 $loader->addNamespace(APPLICATION . '\\Presentation\Controller', PATH_CONTROLLERS);
 $loader->addNamespace(APPLICATION . '\\API', PATH_API);
-$loader->addNamespace(APPLICATION . '\\Nt', PATH_ROOT . 'Nt' . DS);
+$loader->addNamespace('Nt', PATH_ROOT . 'Nt' . DS);
