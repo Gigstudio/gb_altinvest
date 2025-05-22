@@ -1,0 +1,99 @@
+gb_altinvest
+├── .env
+├── .gitignore
+├── bin
+│   ├── mysql8
+│   │   └── Dockerfile
+│   ├── php83
+│   │   └── Dockerfile
+│   ├── python
+│   │   ├── Dockerfile
+│   │   ├── requirements.txt
+│   │   └── scripts
+│   └── telegram-bot
+│       ├── .gitkeep
+│       └── Dockerfile
+├── config
+│   ├── initdb
+│   │   └── .gitkeep
+│   ├── php
+│   │   ├── .gitkeep
+│   │   └── php.ini
+│   └── vhosts
+│       ├── .gitkeep
+│       └── default.conf
+├── dags
+│   └── .gitkeep
+├── data
+│   ├── .gitkeep
+│   ├── mysql
+│   │   └── .gitkeep
+│   ├── python
+│   │   └── .gitkeep
+│   └── tgbot
+│       └── .gitkeep
+├── docker-compose.yml
+├── gb_altinvest.txt
+├── history.md
+├── html
+│   ├── .htaccess
+│   ├── robots.txt
+│   └── siteroot
+│       ├── .htaccess
+│       ├── assets
+│       │   ├── css
+│       │   │   ├── all.css
+│       │   │   ├── default.css
+│       │   │   ├── login.css
+│       │   │   ├── test_default.css
+│       │   │   ├── themes.css
+│       │   │   └── t_editor.css
+│       │   ├── images
+│       │   │   ├── gigicon.png
+│       │   │   ├── gigicon_white.png
+│       │   │   ├── gig_logo_text_black.png
+│       │   │   ├── gig_logo_text_white.png
+│       │   │   ├── Logotip-PMKHZ_2023_prozrachnyy-fon.png
+│       │   │   ├── Magnifying_glass_icon.svg
+│       │   │   ├── pnhz_logo_round_01.png
+│       │   │   └── pnhz_logo_round_02.png
+│       │   ├── js
+│       │   │   ├── core
+│       │   │   │   ├── APIClient.js
+│       │   │   │   ├── Auth copy.js
+│       │   │   │   ├── Auth.js
+│       │   │   │   ├── AuthOld.js
+│       │   │   │   ├── Console.js
+│       │   │   │   └── Utils.js
+│       │   │   ├── main.js
+│       │   │   └── percoClient.js
+│       │   └── webfonts
+│       │       ├── fa-brands-400.eot
+│       │       ├── fa-brands-400.svg
+│       │       ├── fa-brands-400.ttf
+│       │       ├── fa-brands-400.woff
+│       │       ├── fa-brands-400.woff2
+│       │       ├── fa-regular-400.eot
+│       │       ├── fa-regular-400.svg
+│       │       ├── fa-regular-400.ttf
+│       │       ├── fa-regular-400.woff
+│       │       ├── fa-regular-400.woff2
+│       │       ├── fa-solid-900.eot
+│       │       ├── fa-solid-900.svg
+│       │       ├── fa-solid-900.ttf
+│       │       ├── fa-solid-900.woff
+│       │       ├── fa-solid-900.woff2
+│       │       ├── Lobster-Regular.ttf
+│       │       └── OFL.txt
+│       └── index.php
+├── LICENSE
+├── logs
+│   ├── .gitkeep
+│   ├── apache2
+│   │   ├── .gitkeep
+│   │   ├── error.log
+│   │   └── other_vhosts_access.log
+│   └── mysql
+│       └── .gitkeep
+├── README.md
+└── temp

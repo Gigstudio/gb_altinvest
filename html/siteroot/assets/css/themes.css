@@ -1,0 +1,64 @@
+:root {
+    --w64: 64px;
+    --transition-fast: 0.1s;
+    --transition-mid: 0.3s;
+    --transition-slow: 0.5s;
+    --transition-veryslow: 2.5s;
+    --bg-color: #fcfdff;
+    --text-color: #000000;
+    --shadow-color: #00000044;
+    --text-gray: #5a5a5a;
+    --text-darkgray: #3a3a3a;
+    --text-blue: #234877;
+    --light-green:#00c50a;
+    --light-red:#c5000a;
+    --dark-green:#004904;
+    --dark-red:#640005;
+    --link-color: #e6eef7;
+    --menu-bg: #214288;
+    --menu-forecolor: #e0e0ff;
+    --menu-foreaccent: #ffffff;
+    --menu-highlight: #ffffaa;
+    --primary-bg: #214288;
+    --disable-bg: #8a8c8f;
+    --console-bg: #111113;
+    --console-text: #c0c0c0;
+    --winc-bg: #4e5d88;
+    --msg-info: #98fa98;
+    --msg-message: #98cbfa;
+    --msg-warning: #f8fa98;
+    --msg-error: #fa9898;
+    --msg-fatal: #ff4f4f;
+}
+
+[data-theme="dark"] {
+    --w64: 64px;
+    --transition-fast: 0.1s;
+    --transition-mid: 0.3s;
+    --transition-slow: 0.5s;
+    --transition-veryslow: 2.5s;
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --shadow-color: #ffffff25;
+    --text-gray: #5a5a5a;
+    --text-darkgray: #3a3a3a;
+    --text-blue: #234877;
+    --light-green:#00c50a;
+    --light-red:#c5000a;
+    --dark-green:#004904;
+    --dark-red:#640005;
+    --link-color: #66b2ff;
+    --menu-bg: #214288;
+    --menu-forecolor: #e0e0ff;
+    --menu-foreaccent: #ffffff;
+    --menu-highlight: #ffffaa;
+    --primary-bg: #1992e6;
+    --console-bg: #111113;
+    --console-text: #c0c0c0;
+    --winc-bg: #4e5d88;
+    --msg-info: #98fa98;
+    --msg-message: #98cbfa;
+    --msg-warning: #f8fa98;
+    --msg-error: #fa9898;
+    --msg-fatal: #ff4f4f;
+}

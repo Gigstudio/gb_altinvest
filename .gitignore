@@ -1,0 +1,34 @@
+# Бэкап-папки
+html_*/
+
+# Настройки редактора
+.vscode/
+.idea/
+*.swp
+
+# Общие временные файлы
+*.log
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Кэш и сессии
+cache/
+sessions/
+/temp/
+__pycache__/
+*.pyc
+*.pyo
+
+# База данных и apache
+/data/mysql/
+/logs/mysql/
+/logs/apache2/
+
+# Docker/compose специфичные логи и файлы
+*.pid
+
+# Конфиги с чувствительными данными
+.env
+/config/init.json

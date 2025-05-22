@@ -1,0 +1,18 @@
+Options -Indexes
+RewriteEngine On
+
+# Исключение для статики: assets (css, js, images)
+RewriteCond %{REQUEST_URI} ^/assets/ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^assets/(.*)$ assets/$1 [L]
+
+# Обработка всех остальных запросов
+RewriteCond %{REQUEST_URI} !^/index\.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Запрет на доступ к служебным директориям
+RewriteRule ^(app|config|storage)/ - [F]
+
+#ErrorDocument 403 /error/403.html

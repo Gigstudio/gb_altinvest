@@ -1,0 +1,61 @@
+{
+  "app": {
+    "app_name": "AltInSight ",
+    "app_short_name": "AltInSight ",
+    "app_version": "1.0.0",
+    "app_author": "Gregory Chirikov",
+    "app_email": "pvl.gigstudio@gmail.com",
+    "default_charset": "UTF-8",
+    "default_locale": "ru",
+    "default_timezone": "Asia/Almaty",
+    "favicon": "assets/images/gigicon.png",
+    "apple_icon": "",
+    "secret_key": "",
+    "googleAnalytics": "UA-XXXXX-Y"
+  },
+  "debug_error":{
+    "mode": "debug"
+  },
+  "events": {
+    "0": {"title": "Информация", "class": "info"},
+    "1": {"title": "Сообщение","class": "message"},
+    "2": {"title": "Предупреждение","class": "warning"},
+    "3": {"title": "Ошибка","class": "error"},
+    "4": {"title": "Критическая ошибка","class": "fatal"}
+  },
+  "common": {
+    "css": [
+      "themes",
+      "default",
+      "login",
+      "all"
+    ],
+    "js": [
+      "main"
+    ]
+  },
+  "database":{
+    "dbversion": "m00000",
+    "dbhost": "db",
+    "dbport": "3306",
+    "dbuser": "admin",
+    "dbpass": "p0skudA",
+    "dbname": "altinsight"
+  },
+  "tradernet": {
+    "secret_key": "34ed318b1bec9825ef87e15a84e27773fcc65fbd",
+    "public_key": "9585d69dee2238519a7468c5edcd3eb8"
+  },
+  "security": {
+    "password_pattern": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
+    "url_pattern": "https?://.+",
+    "search_pattern": "[^'\\x22]+",
+    "email_pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+    "tel_pattern": "[0-9]{3}-[0-9]{3}-[0-9]{4}",
+    "random_pass_char": 9,
+    "login_timeout": 30,
+    "login_attempts": 3, 
+    "encript_password": true,
+    "password_algo": "PASSWORD_BCRYPT"
+  }
+}
