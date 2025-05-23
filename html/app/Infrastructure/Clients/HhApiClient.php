@@ -246,4 +246,15 @@ class HhApiClient
 
         return ["overall" =>$vacancies, "topEmployers" => $topEmployers, "topCities" => $topCities, "publishStats" => $publishStats, "salaryStats" => $salaryStats];
     }
+
+    public static function saveAsJson(array $vacancies, string $symbol, string $targetDir = '/data/python/vacancies/')
+    {
+        if (empty($vacancies)) return false;
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+        $filename = $targetDir . $symbol . '.json';
+        file_put_contents($filename, json_encode($vacancies, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        return $filename;
+    }
 }

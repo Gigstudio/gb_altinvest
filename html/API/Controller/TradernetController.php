@@ -30,7 +30,6 @@ class TradernetController extends Controller
                 ]
             ]);
         } catch (\Throwable $e) {
-            
             throw new GeneralException(
                 "Ошибка получения котировок для '$symbol'",
                 502,

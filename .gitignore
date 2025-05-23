@@ -35,4 +35,5 @@ __pycache__/
 
 # Экспортные данные для Python-аналитики
 /data/python/quotes/*
+/data/python/vacancies/*
 
