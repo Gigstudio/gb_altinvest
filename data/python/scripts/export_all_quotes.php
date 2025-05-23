@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+// Скрипт создан для тестирования записи в json файл
+
 define('PATH_ROOT', '/var/www/html/');
 
 use GIG\Core\Application;
@@ -11,13 +13,6 @@ require_once PATH_ROOT . 'bootstrap.php';
 $config = new Config();
 $app = new Application($config);
 
-// try {
-//     $repo = new PercoUserRepository();
-//     $repo->refreshPercoUsers();
-// } catch (\Throwable $e) {
-//     if (isset($repo)) $repo->setPercoSyncDone();
-//     file_put_contents(PATH_LOGS . 'perco_sync_error.log', $e . "\n", FILE_APPEND);
-// }
 $symbols = $app->getConfig('tickers', []);
 
 foreach ($symbols as $symbol => $name) {

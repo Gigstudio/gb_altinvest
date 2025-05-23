@@ -5,6 +5,7 @@ defined('_RUNKEY') or die;
 
 use GIG\Core\Config;
 use GIG\Infrastructure\Persistence\MySQLClient;
+use GIG\Infrastructure\Clients\HhApiClient;
 use GIG\Domain\Services\TradernetService;
 use GIG\Core\Request;
 use GIG\Core\Response;
@@ -16,6 +17,7 @@ class Application
     private Config $config;
     public static Application $app;
     private ?TradernetService $tradernetService = null;
+    private ?HhApiClient $hhClient = null;
     private ?MySQLClient $db = null;
     private ?User $currentUser = null;
 
@@ -61,6 +63,22 @@ class Application
             $this->tradernetService = new TradernetService($apiKey, $apiSecret, $version);
         }
         return $this->tradernetService;
+    }
+    
+    public function getHhClient(): ?HhApiClient
+    {
+        if (!$this->hhClient) {
+            $config = $this->config->get();
+            $appName = trim($config['app']['app_name'] ?? 'AltInSight');
+            $appVersion = trim($config['app']['app_version'] ?? '1.0.0');
+            $appEmail = trim($config['app']['app_email'] ?? 'developer@example.com');
+            $userAgent = "{$appName}/{$appVersion} ({$appEmail})";
+
+            $baseUrl = $config['headhunter']['base_url'] ?? 'https://api.hh.ru/';
+            $host = $config['headhunter']['host'] ?? 'hh.kz';
+            $this->hhClient = new HhApiClient($baseUrl, $userAgent, $host);
+        }
+        return $this->hhClient;
     }
     
     public function getDatabase(): ?MySQLClient

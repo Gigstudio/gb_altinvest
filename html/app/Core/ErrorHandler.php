@@ -40,7 +40,7 @@ class ErrorHandler
         $detail = $extra['detail']
             ?? self::composeMessage($e->getCode(), $e->getMessage(), pathinfo($e->getFile(), PATHINFO_FILENAME), $e->getLine());
     
-        self::registerEvent($detail);
+        self::registerEvent($detail, $extra);
     
         self::dispatch($e->getCode(), [
             'title' => Event::getTitle(self::$eventClass),
@@ -78,8 +78,11 @@ class ErrorHandler
         );
     }
 
-    private static function registerEvent(string $message): void
+    private static function registerEvent(string $message, array $extra = []): void
     {
+        if (!empty($extra)) {
+            $message .= ' | extra: ' . json_encode($extra, JSON_UNESCAPED_UNICODE);
+        }
         new Event(self::$eventClass, self::class, $message);
     }
 

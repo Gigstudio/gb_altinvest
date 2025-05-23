@@ -3,7 +3,7 @@ return [
     'main' => [
         ['title' => 'Главная', 'link' => '/', 'icon' => ''],
         ['title' => 'Котировки', 'link' => '/api_test', 'icon' => ''],
-        ['title' => 'Вакансии', 'link' => '/vacancies', 'icon' => ''],
+        ['title' => 'Данные о компании', 'link' => '/altdata', 'icon' => ''],
         ['title' => 'Аналитика', 'link' => '/reports', 'icon' => ''],
     ],
     'side' => [],

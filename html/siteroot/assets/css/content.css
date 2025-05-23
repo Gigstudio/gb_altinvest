@@ -105,3 +105,159 @@
 .quotes-table tr:last-child td {
     border-bottom: none;
 }
+
+.altdata-block { 
+    margin: 0 auto; 
+    /* max-width: 960px;  */
+    background: var(--bg-color, #fff); 
+    border-radius: 10px; 
+    padding: 28px; 
+}
+.altdata-block h1{
+    margin-block-end: 0;
+}
+.altdata-block h2{
+    margin-block-start: 4px;
+    margin-block-end: 32px;
+    color: var(--primary-bg, #3167d2);
+}
+.alt-section {
+    margin: 2em auto;
+    padding: 2em 1.5em;
+    background: var(--bg-color);
+    border-radius: 20px;
+    box-shadow: 0 2px 12px 0 var(--shadow-color);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+}
+
+.alt-section h2, .alt-section h3 {
+    margin: 0 0 1.2em 0;
+    font-weight: 700;
+    color: var(--text-blue);
+    letter-spacing: 0.5px;
+}
+
+.alt-section h3 {
+    font-size: 1.1em;
+    margin-top: 1.5em;
+}
+
+.vacancy-summary-group {
+    margin-bottom: 1.7em;
+}
+
+.vacancy-summary-group ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.vacancy-summary-group li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #eef3f7;
+    font-size: 1em;
+    color: var(--text-darkgray);
+}
+
+.vacancy-summary-group li:last-child {
+    border-bottom: none;
+}
+
+.vacancy-summary-group li strong,
+.vacancy-summary-group li .vac-count {
+    font-weight: 700;
+    color: var(--primary-bg);
+    margin-left: 0.7em;
+}
+
+.vacancy-list {
+    margin: 1.5em 0 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid #e8eaec;
+}
+
+.vacancy-list li {
+    padding: 1.1em 0;
+    border-bottom: 1px solid #e8eaec;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.vacancy-list li strong {
+    color: var(--text-blue);
+    font-size: 1.08em;
+}
+
+.vac-location, .vac-date {
+    font-size: 0.97em;
+    color: var(--text-gray);
+    margin-right: 1.3em;
+}
+
+.vac-date {
+    font-style: italic;
+    color: #b98948;
+}
+
+.vacancy-list a {
+    color: var(--primary-bg);
+    text-decoration: none;
+    transition: color 0.14s;
+}
+.vacancy-list a:hover {
+    text-decoration: underline;
+    color: var(--menu-bg);
+}
+
+.alert.info {
+    padding: 1em 1.2em;
+    margin: 2em 0 0 0;
+    background: var(--msg-info);
+    color: var(--dark-green);
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-bg);
+    font-size: 1em;
+    box-shadow: 0 1px 4px 0 var(--shadow-color);
+}
+
+/* Responsive для мобильных */
+@media (max-width: 600px) {
+    .alt-section {
+        padding: 1.1em 0.7em;
+    }
+    .vacancy-list li, .vacancy-summary-group li {
+        font-size: 0.97em;
+    }
+    .vacancy-list li {
+        padding: 0.8em 0;
+    }
+}
+
+.vacancy-list, .news-list, .event-list { 
+    list-style: none; 
+    padding-left: 0; 
+}
+.vacancy-list li, .news-list li, .event-list li { 
+    margin-bottom: 8px; 
+    border-bottom: 1px solid #ececec; 
+    padding-bottom: 6px; 
+}
+.vac-date, .news-date, .event-date { 
+    color: var(--text-gray, #999); 
+    margin-left: 8px; 
+    font-size: 0.95em; 
+}
+.alert { 
+    margin: 10px 0; 
+    padding: 10px 16px; 
+    border-radius: 6px; 
+    background: var(--msg-info, #e7f3ff); 
+    color: var(--text-blue, #234877); 
+}

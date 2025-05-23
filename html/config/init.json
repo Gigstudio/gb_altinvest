@@ -42,10 +42,6 @@
     "dbpass": "p0skudA",
     "dbname": "altinsight"
   },
-  "tradernet": {
-    "secret_key": "34ed318b1bec9825ef87e15a84e27773fcc65fbd",
-    "public_key": "9585d69dee2238519a7468c5edcd3eb8"
-  },
   "security": {
     "password_pattern": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
     "url_pattern": "https?://.+",
@@ -58,9 +54,36 @@
     "encript_password": true,
     "password_algo": "PASSWORD_BCRYPT"
   },
+  "tradernet": {
+    "secret_key": "34ed318b1bec9825ef87e15a84e27773fcc65fbd",
+    "public_key": "9585d69dee2238519a7468c5edcd3eb8"
+  },
   "tickers": {
-    "KCEL.KZ": "Kcell",
-    "HSBK.KZ": "Halyk Bank",
-    "KZAP.KZ": "Kazatomprom"
+    "KCEL.KZ": {
+      "id": "",
+      "name":"Kcell", 
+      "sector":"telecom", 
+      "industry_id": "9", 
+      "sectorname": "Телекоммуникации, связь"
+    },
+    "HSBK.KZ": {
+      "id": "23817",
+      "name":"Halyk Bank", 
+      "sector":"bank",
+      "industry_id": "43.647", 
+      "sectorname": "Банк"
+    },
+    "KZAP.KZ": {
+      "id": "",
+      "name":"Kazatomprom", 
+      "sector":"energy", 
+      "industry_id": "46", 
+      "sectorname": "Энергетика"
+    }
+  },
+  "headhunter": {
+    "protocol": "https",
+    "base_url": "https://api.hh.ru/",
+    "host": "hh.kz"
   }
 }

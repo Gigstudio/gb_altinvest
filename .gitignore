@@ -32,3 +32,7 @@ __pycache__/
 # Конфиги с чувствительными данными
 .env
 /config/init.json
+
+# Экспортные данные для Python-аналитики
+/data/python/quotes/*
+

@@ -10,7 +10,7 @@
         <select name="symbol" id="symbol">
             <?php foreach ($symbols as $code => $name): ?>
                 <option value="<?= $code ?>"<?= ($symbol ?? '') === $code ? ' selected' : '' ?>>
-                    <?= htmlspecialchars($name) ?>
+                    <?= htmlspecialchars($name['name']) ?>
                 </option>
             <?php endforeach; ?>
         </select>

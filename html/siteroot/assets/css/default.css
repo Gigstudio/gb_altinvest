@@ -240,7 +240,7 @@
 }
 
 .switch-container{
-    position: absolute;
+    /* position: absolute; */
     right: 0;
     margin-right: 6px;
     border: solid 1px #ffffff33;

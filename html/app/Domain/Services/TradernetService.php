@@ -2,6 +2,7 @@
 namespace GIG\Domain\Services;
 
 use Nt\PublicApiClient;
+use GIG\Domain\Exceptions\GeneralException;
 
 class TradernetService
 {
@@ -27,12 +28,27 @@ class TradernetService
         try {
             $result = $this->client->sendRequest($command, $params, 'array');
             if (!is_array($result) || isset($result['error'])) {
-                throw new \Exception($result['error'] ?? 'Unknown error from Tradernet');
+                // throw new \Exception($result['error'] ?? 'Unknown error from Tradernet');
+                throw new GeneralException(
+                    $result['error'],
+                    400,
+                    [
+                        'reason' => 'unknown_error',
+                        'detail' => self::class . ': получена неизвестная ошибка от Tradernet'
+                    ]
+                );
             }
             return $result;
         } catch (\Throwable $e) {
             // Можно логировать ошибку
-            throw $e;
+            throw new GeneralException(
+                $result['error'],
+                400,
+                [
+                    'reason' => 'unknown_error',
+                    'detail' => self::class . ': получена неизвестная ошибка от Tradernet'
+                ]
+            );
         }
     }
 

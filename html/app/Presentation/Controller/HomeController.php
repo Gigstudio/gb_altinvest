@@ -70,13 +70,80 @@ class HomeController extends Controller
         $data['symbol'] = $symbol;
         $data['quotes'] = $quotes;
 
-        if($tradernetService){
-            // $csvFile = $tradernetService::saveAsCsv($quotes, $symbol);
-            $jsonFile = $tradernetService::saveAsJson($quotes, $symbol);
-        }
-        new Event(Event::EVENT_INFO, self::class, "Котировки по $symbol сохранены в $jsonFile для анализа.");
+        // if($tradernetService){
+        //     // $csvFile = $tradernetService::saveAsCsv($quotes, $symbol);
+        //     $jsonFile = $tradernetService::saveAsJson($quotes, $symbol);
+        // }
+        // new Event(Event::EVENT_INFO, self::class, "Котировки по $symbol сохранены в $jsonFile для анализа.");
 
         $pageBlock = $this->buildPage($data, $contentPath, 'CRM-панель');
+        $this->render($pageBlock);
+    }
+
+    public function altdata($data)
+    {
+        AssetManager::addStyle("/assets/css/content.css");
+        $data['title'] = 'Данные о компании';
+        $data['symbols'] = $this->app->getConfig('tickers', []);
+
+        $contentPath = __FUNCTION__ . '/content';
+
+        // Получение выбранного тикера
+        $symbol = $data['query']['symbol'] ?? array_key_first($data['symbols']);
+        $area = $data['query']['area'] ?? '40';
+        if (!isset($data['symbols'][$symbol])) {
+            new Event(Event::EVENT_WARNING, self::class, "Попытка выбрать несуществующий тикер '$symbol', установлен тикер по умолчанию.");
+            $data['error'] = "Некорректный тикер ($symbol)! Использован тикер по умолчанию.";
+            $symbol = array_key_first($data['symbols']);
+        } else {
+            $data['selectedSymbol'] = $symbol;
+            $data['companyName'] = $data['symbols'][$symbol]['name'];
+            $data['ecoSector'] = $data['symbols'][$symbol]['sectorname'];
+
+            $data['title'] .= ' — ' . $data['companyName'] . '<br><h2>(отрасль: ' . $data['ecoSector'] . ')</h2>';
+            $industry_id = $data['symbols'][$symbol]['industry_id'];
+        }
+
+        // 1. Загрузка вакансий
+        try {
+            // Пример: получаем из сервиса/репозитория, здесь — просто заглушка
+            $vacancies = $this->app->getHhClient()->getVacanciesByIndustry($industry_id, $area);
+        } catch (\Throwable $e) {
+            if ($e instanceof GeneralException) {
+                $details = $e->getExtra();
+                $msg = "Ошибка получения вакансий: " . $e->getMessage() . "\n" . json_encode($details['detail'], JSON_UNESCAPED_UNICODE);
+            } else {
+                $msg = "Ошибка получения вакансий: " . $e->getMessage() . "\n" . $e->getTraceAsString();
+            }
+            new Event(Event::EVENT_WARNING, self::class, $msg);
+            $vacancies = [];
+        }
+        $data['vacancies'] = $vacancies['overall'];
+        $data['topEmployers'] = $vacancies['topEmployers'];
+        $data['topCities'] = $vacancies['topCities'];
+        $data['publishStats'] = $vacancies['publishStats'];
+        $data['salaryStats'] = $vacancies['salaryStats'];
+        // ["overall" =>$vacancies, "topEmployers" => $topEmployers, "topCities" => $topCities, "publishStats" => $publishStats]
+
+        // 2. Загрузка новостей
+        // try {
+        //     $news = $this->app->getNewsService()->getNewsBySymbol($symbol);
+        // } catch (\Throwable $e) {
+        //     new Event(Event::EVENT_WARNING, self::class, "Ошибка получения новостей: " . $e->getMessage());
+        //     $news = [];
+        // }
+        // $data['news'] = $news;
+
+        // 3. Загрузка событий
+        // try {
+        //     $events = $this->app->getEventsService()->getEventsBySymbol($symbol);
+        // } catch (\Throwable $e) {
+        //     new Event(Event::EVENT_WARNING, self::class, "Ошибка получения событий: " . $e->getMessage());
+        //     $events = [];
+        // }
+        // $data['events'] = $events;
+
+        $pageBlock = $this->buildPage($data, $contentPath, 'Данные о компании');
         $this->render($pageBlock);
     }
 }

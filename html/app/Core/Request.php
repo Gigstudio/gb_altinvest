@@ -60,7 +60,7 @@ class Request
         $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
         $xhr = $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
     
-        return str_starts_with($uri, '/api/')
+        return preg_match('~^/api\b~i', $uri)
             || str_contains($accept, 'application/json')
             || strtolower($xhr) === 'xmlhttprequest';
     }

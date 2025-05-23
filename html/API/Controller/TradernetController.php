@@ -23,10 +23,14 @@ class TradernetController extends Controller
             $quotes = $service->getQuotes($symbol, $dateFrom, $dateTo);
             $this->json([
                 'status' => 'success',
-                'symbol' => $symbol,
-                'quotes' => $quotes,
+                'message' => "Получены котировки для $symbol с $dateFrom по $dateTo",
+                'result' => [
+                    'symbol' => $symbol,
+                    'quotes' => $quotes,
+                ]
             ]);
         } catch (\Throwable $e) {
+            
             throw new GeneralException(
                 "Ошибка получения котировок для '$symbol'",
                 502,
