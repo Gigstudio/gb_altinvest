@@ -135,7 +135,7 @@
 .alt-section h2, .alt-section h3 {
     margin: 0 0 1.2em 0;
     font-weight: 700;
-    color: var(--text-blue);
+    color: var(--primary-bg);
     letter-spacing: 0.5px;
 }
 

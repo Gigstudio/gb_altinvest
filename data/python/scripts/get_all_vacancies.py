@@ -1,38 +1,27 @@
 import os
 import json
-import pandas as pd
-import matplotlib.pyplot as plt
+from php_bridge import get_config, get_vacancies
 
-VACANCY_DIR = '/data/python/vacancies'
-RESULTS_DIR = '/results/vacancies'
+OUTPUT_DIR = "/data/vacancies"
 
-os.makedirs(RESULTS_DIR, exist_ok=True)
+def main():
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    tickers = get_config('tickers')
 
-for filename in os.listdir(VACANCY_DIR):
-    if filename.endswith('.json'):
-        symbol = filename.replace('.json', '')
-        filepath = os.path.join(VACANCY_DIR, filename)
-        with open(filepath, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+    for symbol, info in tickers.items():
+        try:
+            industry_id = info.get('industry_id')
+            if not industry_id:
+                print(f"Нет industry_id для {symbol}, пропущено.")
+                continue
+            # Можно добавить выбор area по нужной логике, сейчас '40' — Казахстан
+            vacancies = get_vacancies(industry_id, area='40')
+            filename = os.path.join(OUTPUT_DIR, f"{symbol}.json")
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(vacancies, f, ensure_ascii=False, indent=2)
+            print(f"Saved: {filename}")
+        except Exception as e:
+            print(f"Error for {symbol}: {e}")
 
-        # Преобразуем в DataFrame
-        df = pd.DataFrame(data)
-        if df.empty:
-            print(f"No data for {symbol}")
-            continue
-
-        # Пример: топ-10 городов
-        top_cities = df['city'].value_counts().head(10)
-        plt.figure(figsize=(10,4))
-        top_cities.plot(kind='bar')
-        plt.title(f"Top 10 cities by vacancies — {symbol}")
-        plt.ylabel('Количество вакансий')
-        plt.tight_layout()
-        plt.savefig(os.path.join(RESULTS_DIR, f"{symbol}_top_cities.png"))
-        plt.close()
-        print(f"Saved chart for {symbol}")
-
-        # Аналогично — топ работодателей, распределение по зарплате и дате публикации
-        # ...
-
-print("Done.")
+if __name__ == "__main__":
+    main()

@@ -247,7 +247,7 @@ class HhApiClient
         return ["overall" =>$vacancies, "topEmployers" => $topEmployers, "topCities" => $topCities, "publishStats" => $publishStats, "salaryStats" => $salaryStats];
     }
 
-    public static function saveAsJson(array $vacancies, string $symbol, string $targetDir = '/data/python/vacancies/')
+    public static function saveAsJson(array $vacancies, string $symbol, string $targetDir = '/data/vacancies/')
     {
         if (empty($vacancies)) return false;
         if (!is_dir($targetDir)) {

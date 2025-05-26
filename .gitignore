@@ -34,6 +34,6 @@ __pycache__/
 /config/init.json
 
 # Экспортные данные для Python-аналитики
-/data/python/quotes/*
-/data/python/vacancies/*
+/data/quotes/*
+/data/vacancies/*
 

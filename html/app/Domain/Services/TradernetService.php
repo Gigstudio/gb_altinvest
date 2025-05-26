@@ -52,7 +52,7 @@ class TradernetService
         }
     }
 
-    public static function saveAsCsv(array $quotes, string $symbol, string $targetDir = '/data/python/quotes/')
+    public static function saveAsCsv(array $quotes, string $symbol, string $targetDir = '/data/quotes/')
     {
         if (empty($quotes)) return false;
         if (!is_dir($targetDir)) {
@@ -75,7 +75,7 @@ class TradernetService
         return $filename;
     }
 
-    public static function saveAsJson(array $quotes, string $symbol, string $targetDir = '/data/python/quotes/')
+    public static function saveAsJson(array $quotes, string $symbol, string $targetDir = '/data/quotes/')
     {
         if (empty($quotes)) return false;
         if (!is_dir($targetDir)) {

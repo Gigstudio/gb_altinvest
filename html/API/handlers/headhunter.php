@@ -10,7 +10,7 @@ $data = $input['data'] ?? [];
 $controller = new HhController();
 
 switch ($action) {
-    case 'getQuotes':
+    case 'getVacancies':
         $controller->getVacancies($data);
         break;
 
