@@ -71,13 +71,15 @@ services:
     working_dir: /data
     command: ["sleep", "infinity"]
   airflow:
-    image: apache/airflow:2.7.0
+    build:
+      context: ./bin/airflow
     container_name: "${COMPOSE_PROJECT_NAME}-airflow"
     environment:
       - ...
     volumes:
       - ./dags:/opt/airflow/dags
       - ./data:/data
+      - ./config/rclone:/home/airflow/.config/rclone
     ports:
       - "8081:8080"
     depends_on:

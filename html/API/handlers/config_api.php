@@ -5,7 +5,7 @@ use GIG\Domain\Exceptions\GeneralException;
 defined('_RUNKEY') or die;
 
 $action = $input['action'] ?? null;
-$key = $input['key'] ?? null;
+$key = $input['key'] ?? ($input['data']['key'] ?? null);
 $data = $input['data'] ?? [];
 
 switch ($action) {

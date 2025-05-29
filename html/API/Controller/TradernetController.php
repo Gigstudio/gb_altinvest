@@ -40,4 +40,37 @@ class TradernetController extends Controller
             );
         }
     }
+
+    public function getNews(array $data): void
+    {
+        $symbol = $data['symbol'] ?? 'KCEL';
+        $count = $data['count'] ?? 30; // Сколько новостей забирать
+
+        $config = $this->app->getConfig('tradernet');
+        $apiKey = $config['public_key'] ?? '';
+        $apiSecret = $config['secret_key'] ?? '';
+
+        $service = new TradernetService($apiKey, $apiSecret);
+
+        try {
+            $news = $service->getNews($symbol, $count);
+            $this->json([
+                'status' => 'success',
+                'message' => "Получены новости для $symbol",
+                'result' => [
+                    'symbol' => $symbol,
+                    'news' => $news,
+                ]
+            ]);
+        } catch (\Throwable $e) {
+            throw new GeneralException(
+                "Ошибка получения новостей для '$symbol'",
+                502,
+                [
+                    'reason' => 'news_not_found',
+                    'detail' => $e->getMessage()
+                ]
+            );
+        }
+    }
 }

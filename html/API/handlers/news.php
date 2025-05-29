@@ -10,10 +10,6 @@ $data = $input['data'] ?? [];
 $controller = new TradernetController();
 
 switch ($action) {
-    case 'getQuotes':
-        $controller->getQuotes($data);
-        break;
-
     case 'getNews':
         $controller->getNews($data);
         break;

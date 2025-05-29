@@ -56,7 +56,9 @@
   },
   "tradernet": {
     "secret_key": "34ed318b1bec9825ef87e15a84e27773fcc65fbd",
-    "public_key": "9585d69dee2238519a7468c5edcd3eb8"
+    "public_key": "9585d69dee2238519a7468c5edcd3eb8",
+    "login": "pvl.gigstudio@gmail.com",
+    "password": "derbes5t6y7"
   },
   "tickers": {
     "KCEL.KZ": {
@@ -85,5 +87,10 @@
     "protocol": "https",
     "base_url": "https://api.hh.ru/",
     "host": "hh.kz"
+  },
+  "dropbox_integrity": {
+    "app_key": "eotnrb9719o30uh",
+    "app_secret": "szu7yan3w74dtyj",
+    "token": "sl.u.AFzw9PVjau1OBR1INqCrVJXN5vriFNhnBK7E2Rm-1PZXjBGtBY1yVOyI9r_n3R7YbXo-9OLPgkU_q1mHlJvnEaADEkYsXIVgMp4wcl59bETj0sKUxUIDBYXLy6a5qDcXul-8W2pZTh9YktmRsiNxVnyzU2gHaWpyi8anjb3MkJP4ZXwEufW5PowCS1_BFIr70AlZigW9hRai-682Xoj5WSQ2INOpF0N1DJhkpypL4FbYzchOHuo-LAJvCOjycpYBjm85nftV-jg3CJ9PfRRi7g9SzwhBuGHMZ6zZQyXVEyEnfNoiN-ZGR3juzO0rDG_kmecBc1qSHCa8ecC30YzluL3ngeogQ2VX2s-QJCApHgdGMsOlbknj-vsCw2pJOczXGRmSIz16lc8fHwmAHkdg5JTmMJ_IILibae34YgcEMfIuvbQ3P8XJ7jQWOtdKYBxnvkfbllseQYMuIaNv7b60_gj-bfIE2LVfuPHE_CkB8e8teCS3WnMjSRUGQupV3ja713G4MasetFpFIdK2XagByVDWwMKMqRhO4blLNxmdEtI9b4MAmP3XbHWJdoXTyN84ggQvS4_7d4Q-5K7TBq1a6S8Odz-NPWIV2DJjrt2ejOKPmLBjhJyTfRVMGL-X8TLp7_kH0PVbQtWBvq1HSCF1d3axiWEVIUtAbYw9hYLjQDk0qbyBNG8eqWXebP7IWqjHZXwYFGcNeMq9tW2mOYGuB1MhIK1f3PhDfy-HkUIMQslt2956aEodxgVDdsgr7avEyHLeai3SWeuXT0xloJ_L95ESksrlgvvNUD3Gdafal49yVeoMjTS4aHcCzeT4mpSe5OS7ke2EJyPtfTSM2FE4F7PMMmVUciubfiCyT3rl5pMaEirhDxIkZlUf9CDO-L5ASYM1gXyXV74qUb1JZl2boTPIsO3EjLxQ8huCgN2D8EdDz918C7bwFf-Gb9TQRiw9o0_t0pKHZGuAjuWO2AYRirdwVO_gwiRat5CW0avVo2kdzSADzi6vqWjHdujEEbsTpGJM3j99xChKC80WpgrGFkZU6us1SpN2yJrM1f-1hpQU-r6VYrDenfBn-3Eh16bEXog08apARw9RiOa4nbLnZTZbBw1bHARoDqnO09lI_FMydukupou1QaZUjlwiYncwnUQ19df46MGHcnjipeiMeft0lFWm6HeKW9n-qLdb2nz4wYPOWuKilIlzy6dDR768sAIddWy677v78fJ6PdkA1H-DWy3gfuY00w-VNWIfqrGowfiZUhBmNPUQErJS3fXth4dU6UfIqeWVsKDA9qsw_N4twVEhxd2s6PAj1FB5d3Cs1w"
   }
 }

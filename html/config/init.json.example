@@ -42,10 +42,6 @@
     "dbpass": "YOUR_DB_PASSWORD",
     "dbname": "altinsight"
   },
-  "tradernet": {
-    "secret_key": "",
-    "public_key": ""
-  },
   "security": {
     "password_pattern": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
     "url_pattern": "https?://.+",
@@ -57,5 +53,44 @@
     "login_attempts": 3, 
     "encript_password": true,
     "password_algo": "PASSWORD_BCRYPT"
+  },
+  "tradernet": {
+    "secret_key": "",
+    "public_key": "",
+    "login": "",
+    "password": ""
+  },
+  "tickers": {
+    "KCEL.KZ": {
+      "id": "",
+      "name":"Kcell", 
+      "sector":"telecom", 
+      "industry_id": "9", 
+      "sectorname": "Телекоммуникации, связь"
+    },
+    "HSBK.KZ": {
+      "id": "23817",
+      "name":"Halyk Bank", 
+      "sector":"bank",
+      "industry_id": "43.647", 
+      "sectorname": "Банк"
+    },
+    "KZAP.KZ": {
+      "id": "",
+      "name":"Kazatomprom", 
+      "sector":"energy", 
+      "industry_id": "46", 
+      "sectorname": "Энергетика"
+    }
+  },
+  "headhunter": {
+    "protocol": "https",
+    "base_url": "https://api.hh.ru/",
+    "host": "hh.kz"
+  },
+  "dropbox_integrity": {
+    "app_key": "YOUR_APP_KEY",
+    "app_secret": "YOUR_APP_SECRET",
+    "token": "YOUR_ACCESS_TOKEN"
   }
 }

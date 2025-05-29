@@ -2,9 +2,8 @@
 namespace GIG\API\Controller;
 
 use GIG\Core\Controller;
-use GIG\Infrastructure\Clients\HhApiClient;
+use GIG\Domain\Services\DataExportService;
 use GIG\Domain\Exceptions\GeneralException;
-use GIG\Core\Event;
 
 class HhController extends Controller
 {
@@ -31,16 +30,18 @@ class HhController extends Controller
                     ['reason' => 'missing_industry_id', 'detail' => $symbol]
                 );
             }
+            $sectorname = $symbols[$symbol]['sectorname'] ?? $symbol;
 
             $result = $client->getVacanciesByIndustry($industry_id, $area);
             // Экспортируем вакансии в JSON (аналогично saveAsJson для котировок)
-            $file = HhApiClient::saveAsJson($result['overall'], $symbol);
+            $file = DataExportService::saveAsJson($result['overall'], $symbol, '/data/vacancies/');
 
             $this->json([
                 'status' => 'success',
                 'message' => "Получены вакансии по $symbol (отрасль $industry_id), экспортировано в $file",
                 'result' => [
                     'symbol' => $symbol,
+                    'sectorname' => $sectorname,
                     'vacancies' => $result['overall'],
                     'topEmployers' => $result['topEmployers'],
                     'topCities' => $result['topCities'],

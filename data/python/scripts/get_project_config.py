@@ -4,7 +4,7 @@ API_URL = "http://localhost:8181/API/index.php"
 
 def get_config(key=None):
     payload = {
-        "module": "config",
+        "module": "config_api",
     }
     if key:
         payload["key"] = key

@@ -31,9 +31,13 @@ __pycache__/
 
 # Конфиги с чувствительными данными
 .env
-/config/init.json
+/html/config/init.json
+/config/rclone/rclone.conf
+/config/rclone/airflow-rclone-sa.json
+/config/rclone/integration-with-365306-1337fa1e3cf8.json
 
 # Экспортные данные для Python-аналитики
 /data/quotes/*
 /data/vacancies/*
+/data/news/*
 

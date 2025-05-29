@@ -3,6 +3,8 @@ gb_altinvest
 ├── .env.example
 ├── .gitignore
 ├── bin
+│   ├── airflow
+│   │   └── Dockerfile
 │   ├── mysql8
 │   │   └── Dockerfile
 │   ├── php83
@@ -20,19 +22,48 @@ gb_altinvest
 │   ├── php
 │   │   ├── .gitkeep
 │   │   └── php.ini
+│   ├── rclone
+│   │   ├── airflow-rclone-sa.json
+│   │   ├── integration-with-365306-1337fa1e3cf8.json
+│   │   └── rclone.conf
 │   └── vhosts
 │       ├── .gitkeep
 │       └── default.conf
 ├── dags
-│   └── .gitkeep
+│   ├── .gitkeep
+│   ├── export_news_dag.py
+│   ├── export_quotes_dag.py
+│   ├── export_vacancies_dag.py
+│   └── __pycache__
+│       ├── export_news_dag.cpython-38.pyc
+│       ├── export_quotes_dag.cpython-38.pyc
+│       └── export_vacancies_dag.cpython-38.pyc
 ├── data
 │   ├── .gitkeep
 │   ├── mysql
 │   │   └── .gitkeep
+│   ├── news
 │   ├── python
+│   │   ├── .gitkeep
+│   │   └── scripts
+│   │       ├── export_all_quotes.php
+│   │       ├── get_all_news.py
+│   │       ├── get_all_quotes.py
+│   │       ├── get_all_vacancies.py
+│   │       ├── get_project_config.py
+│   │       ├── php_bridge.py
+│   │       └── __pycache__
+│   │           └── php_bridge.cpython-38.pyc
+│   ├── quotes
+│   │   ├── HSBK.KZ.json
+│   │   ├── KCEL.KZ.json
+│   │   └── KZAP.KZ.json
+│   ├── tgbot
 │   │   └── .gitkeep
-│   └── tgbot
-│       └── .gitkeep
+│   └── vacancies
+│       ├── HSBK.KZ.json
+│       ├── KCEL.KZ.json
+│       └── KZAP.KZ.json
 ├── docker-compose.yml
 ├── gb_altinvest.txt
 ├── history.md
@@ -41,10 +72,16 @@ gb_altinvest
 │   ├── API
 │   │   ├── Controller
 │   │   │   ├── AuthController.php
-│   │   │   └── ConsoleController.php
+│   │   │   ├── ConsoleController.php
+│   │   │   ├── HhController.php
+│   │   │   └── TradernetController.php
 │   │   ├── handlers
 │   │   │   ├── auth.php
-│   │   │   └── console.php
+│   │   │   ├── config.php
+│   │   │   ├── console.php
+│   │   │   ├── headhunter.php
+│   │   │   ├── news.php
+│   │   │   └── tradernet.php
 │   │   └── index.php
 │   ├── app
 │   │   ├── Core
@@ -71,9 +108,12 @@ gb_altinvest
 │   │   │   │   └── GeneralException.php
 │   │   │   └── Services
 │   │   │       ├── AuthManager.php
-│   │   │       └── LoginGenerator.php
+│   │   │       ├── DataExportService.php
+│   │   │       ├── LoginGenerator.php
+│   │   │       └── TradernetService.php
 │   │   ├── Infrastructure
 │   │   │   ├── Clients
+│   │   │   │   └── HhApiClient.php
 │   │   │   ├── Contracts
 │   │   │   │   ├── DatabaseClientInterface.php
 │   │   │   │   └── ServiceClientInterface.php
@@ -87,6 +127,8 @@ gb_altinvest
 │   │       │   ├── HomeController.php
 │   │       │   └── MessageController.php
 │   │       └── View
+│   │           ├── altdata
+│   │           │   └── content.php
 │   │           ├── content.php
 │   │           ├── error.php
 │   │           ├── FontManager.php
@@ -114,11 +156,13 @@ gb_altinvest
 │   ├── Nt
 │   │   └── PublicApiClient.php
 │   ├── robots.txt
+│   ├── scripts
 │   ├── siteroot
 │   │   ├── .htaccess
 │   │   ├── assets
 │   │   │   ├── css
 │   │   │   │   ├── all.css
+│   │   │   │   ├── content.css
 │   │   │   │   ├── default.css
 │   │   │   │   ├── login.css
 │   │   │   │   ├── test_default.css
@@ -171,4 +215,8 @@ gb_altinvest
 │   └── mysql
 │       └── .gitkeep
 ├── README.md
-└── temp
+├── temp
+│   ├── HSBK.KZ.json
+│   ├── KCEL.KZ.json
+│   └── KZAP.KZ.json
+└── TOTO.md
