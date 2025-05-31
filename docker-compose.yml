@@ -80,6 +80,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./data:/data
       - ./config/rclone:/home/airflow/.config/rclone
+      - airflow_data:/opt/airflow
     ports:
       - "8081:8080"
     depends_on:
@@ -93,3 +94,5 @@ services:
     volumes:
       - ./data:/data
     # command: ["python", "bot.py"]
+volumes:
+  airflow_data:

@@ -7,4 +7,4 @@ RUN pip install pandas numpy matplotlib plotly requests
 COPY ./requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY scripts/ ./scripts/
+# COPY scripts/ ./scripts/
