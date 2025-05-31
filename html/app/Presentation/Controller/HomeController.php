@@ -13,8 +13,8 @@ class HomeController extends Controller
 {
     public function index(array $data): void
     {
+        $data['title'] = 'Сервис находится на стадии разработки';
         $pageBlock = $this->buildPage($data);
-        $data['info'] = 'Сервис находится на стадии разработки';
         $this->render($pageBlock);
     }
 

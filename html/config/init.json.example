@@ -14,7 +14,7 @@
     "googleAnalytics": "UA-XXXXX-Y"
   },
   "debug_error":{
-    "mode": "debug"
+    "mode": "deploy"
   },
   "events": {
     "0": {"title": "Информация", "class": "info"},
